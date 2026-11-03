@@ -1,0 +1,67 @@
+---
+import { SITE } from '../config';
+import { withBase } from '../lib/urls';
+import '../styles/base.css';
+import 'katex/dist/katex.min.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+  article?: boolean;
+  canonicalPath?: string;
+}
+
+const { title, description = SITE.description, noindex = false, article = false, canonicalPath } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} · ${SITE.tagline}`;
+const canonical = new URL(canonicalPath ?? Astro.url.pathname, SITE.url).href;
+const navigation = [
+  { label: '홈', href: withBase('') },
+  { label: '글', href: withBase('posts/') },
+  { label: '태그', href: withBase('tags/') },
+  { label: '검색', href: withBase('search/') },
+  { label: '소개', href: withBase('about/') },
+];
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} RSS`} href={withBase('rss.xml')} />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="ko_KR" />
+    <meta name="twitter:card" content="summary" />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">본문으로 바로 가기</a>
+    <header class="site-header container">
+      <a class="site-name" href={withBase('')}>{SITE.name}</a>
+      <nav aria-label="주요 메뉴">
+        <ul class="nav-list">
+          {navigation.map(({ label, href }) => (
+            <li><a href={href} aria-current={Astro.url.pathname === href ? 'page' : undefined}>{label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+    <main id="main-content" class="container" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer container">
+      <p>{SITE.name} · {SITE.tagline}</p>
+      <p><a href={withBase('rss.xml')}>RSS 구독</a> · <a href={SITE.repository}>GitHub 저장소</a></p>
+    </footer>
+  </body>
+</html>

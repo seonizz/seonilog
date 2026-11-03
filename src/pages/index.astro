@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import { SITE } from '../config';
+import { getPosts } from '../lib/posts';
+import { withBase } from '../lib/urls';
+const posts = await getPosts();
+---
+
+<BaseLayout>
+  <header class="page-heading">
+    <h1>{SITE.name}</h1>
+    <p>{SITE.tagline}</p>
+    <p>처음 만난 개념, 막혔던 질문, 직접 확인한 내용을 하나씩 기록합니다.</p>
+  </header>
+  <section aria-labelledby="recent-posts">
+    <h2 id="recent-posts">최근 기록</h2>
+    <PostList posts={posts.slice(0, 5)} />
+    <p><a href={withBase('posts/')}>모든 글 보기 →</a></p>
+  </section>
+</BaseLayout>

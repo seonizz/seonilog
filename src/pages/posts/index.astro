@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getPosts } from '../../lib/posts';
+const posts = await getPosts();
+---
+
+<BaseLayout title="모든 글" description="seonilog에 쌓이는 공대생의 학습 기록을 최신순으로 모았습니다.">
+  <header class="page-heading">
+    <h1>모든 글</h1>
+    <p>{posts.length}개의 기록을 최신순으로 모았습니다.</p>
+  </header>
+  <PostList posts={posts} />
+</BaseLayout>

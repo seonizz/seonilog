@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/urls';
+---
+
+<BaseLayout title="소개" description="모르는 것을 하나씩 알아가는 공대생의 학습 블로그, seonilog를 소개합니다.">
+  <article class="prose">
+    <h1>seonilog 소개</h1>
+    <p>아무것도 모르는 상태에서 시작해, 궁금한 것을 하나씩 채워가는 공대생의 학습 기록입니다.</p>
+    <h2>무엇을 기록하나요?</h2>
+    <p>처음 접한 개념, 코드를 읽고 쓰다가 생긴 질문, 계산을 따라가며 막혔던 부분을 기록합니다. 완벽한 정답을 모으기보다 이해가 어떻게 바뀌었는지를 남깁니다.</p>
+    <h2>어떻게 기록하나요?</h2>
+    <ul>
+      <li>무엇이 궁금했는지부터 적습니다.</li>
+      <li>작은 예시를 직접 확인하고, 이해한 내용을 제 말로 풀어 봅니다.</li>
+      <li>아직 모르는 부분과 참고한 자료를 함께 남깁니다.</li>
+      <li>틀린 것을 발견하면 이유를 확인하고 내용을 고칩니다.</li>
+    </ul>
+    <p>오늘 하나를 이해했다면, 그 하나부터 적어 보겠습니다.</p>
+    <p><a href={withBase('posts/')}>학습 기록 읽기 →</a></p>
+  </article>
+</BaseLayout>

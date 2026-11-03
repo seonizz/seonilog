@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getPosts, getTags, tagSlug, type Post } from '../../lib/posts';
+import { withBase } from '../../lib/urls';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return getTags(posts).map((tag) => ({
+    params: { tag: tagSlug(tag) },
+    props: { tag, posts: posts.filter((post) => post.data.tags.includes(tag)) },
+  }));
+}
+interface Props { tag: string; posts: Post[] }
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`#${tag}`} description={`${tag} 주제의 학습 기록입니다.`}>
+  <header class="page-heading">
+    <p><a href={withBase('tags/')}>← 모든 태그</a></p>
+    <h1>#{tag}</h1>
+    <p>{posts.length}개의 기록</p>
+  </header>
+  <PostList posts={posts} />
+</BaseLayout>

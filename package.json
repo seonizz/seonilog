@@ -1,0 +1,36 @@
+{
+  "name": "seonilog",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "check": "astro check",
+    "test": "node --test",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1",
+    "verify": "node scripts/verify-build.mjs",
+    "new:post": "node scripts/new-post.mjs"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "7.3.5",
+    "@astrojs/rss": "4.0.19",
+    "@astrojs/sitemap": "3.7.4",
+    "astro": "7.4.5",
+    "katex": "^0.19.1",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0"
+  },
+  "overrides": {
+    "katex": "$katex"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "parse5": "^8.1.0",
+    "typescript": "^5.9.3",
+    "yaml": "^2.9.1"
+  }
+}
