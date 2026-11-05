@@ -8,11 +8,10 @@ const tags = getTags(posts);
 <BaseLayout title="태그" description="궁금한 주제를 태그로 찾아보세요.">
   <header class="page-heading">
     <h1>태그</h1>
-    <p>글이 쌓이면 함께 늘어나는 공부의 갈래입니다.</p>
   </header>
   {tags.length ? (
     <ul class="tag-list">
       {tags.map((tag) => <li><a href={tagUrl(tag)}>#{tag} ({posts.filter((post) => post.data.tags.includes(tag)).length})</a></li>)}
     </ul>
-  ) : <p>아직 등록된 태그가 없습니다.</p>}
+  ) : <p>태그가 없습니다.</p>}
 </BaseLayout>

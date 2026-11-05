@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPosts, type Post, formatDate, readingMinutes, postUrl, tagUrl } from '../../lib/posts';
+import { getPosts, type Post, formatDate, postUrl, tagUrl } from '../../lib/posts';
 import { withBase } from '../../lib/urls';
 import { SITE } from '../../config';
 
@@ -35,13 +35,11 @@ const jsonld = JSON.stringify({
   <article>
     <header class="page-heading">
       <p><a href={withBase('posts/')}>← 모든 글</a></p>
-      {post.data.draft && <p class="draft-label">초안 · 개발 환경에서만 표시됩니다.</p>}
+      {post.data.draft && <p class="draft-label">초안</p>}
       <h1>{post.data.title}</h1>
-      <p>{post.data.description}</p>
       <p class="post-meta">
-        작성 <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+        <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
         {post.data.updatedDate && <> · 수정 <time datetime={post.data.updatedDate.toISOString()}>{formatDate(post.data.updatedDate)}</time></>}
-        {' · 약 '}{readingMinutes(post.body)}분
       </p>
       {post.data.tags.length > 0 && (
         <ul class="tag-list" aria-label="글 태그">

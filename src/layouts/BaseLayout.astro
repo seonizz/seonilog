@@ -13,10 +13,9 @@ interface Props {
 }
 
 const { title, description = SITE.description, noindex = false, article = false, canonicalPath } = Astro.props;
-const pageTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} · ${SITE.tagline}`;
+const pageTitle = title ? `${title} | ${SITE.name}` : SITE.name;
 const canonical = new URL(canonicalPath ?? Astro.url.pathname, SITE.url).href;
 const navigation = [
-  { label: '홈', href: withBase('') },
   { label: '글', href: withBase('posts/') },
   { label: '태그', href: withBase('tags/') },
   { label: '검색', href: withBase('search/') },
@@ -60,8 +59,7 @@ const navigation = [
       <slot />
     </main>
     <footer class="site-footer container">
-      <p>{SITE.name} · {SITE.tagline}</p>
-      <p><a href={withBase('rss.xml')}>RSS 구독</a> · <a href={SITE.repository}>GitHub 저장소</a></p>
+      <p><a href={withBase('rss.xml')}>RSS</a> · <a href={SITE.repository}>GitHub</a></p>
     </footer>
   </body>
 </html>

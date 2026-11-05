@@ -48,8 +48,6 @@ if (root) {
     link.href = entry.url;
     link.textContent = entry.title;
     heading.append(link);
-    const description = document.createElement('p');
-    description.textContent = entry.description;
     const metadata = document.createElement('p');
     metadata.className = 'post-meta';
     const date = document.createElement('time');
@@ -58,8 +56,7 @@ if (root) {
       year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
     }).format(new Date(entry.pubDate));
     metadata.append(date);
-    if (entry.tags.length) metadata.append(` · ${entry.tags.map((tag) => `#${tag}`).join(' ')}`);
-    article.append(heading, metadata, description);
+    article.append(heading, metadata);
     item.append(article);
     return item;
   }
@@ -69,11 +66,11 @@ if (root) {
     const query = input.value.trim();
     results.replaceChildren();
     if (!query) {
-      status.textContent = '검색어를 입력해 주세요.';
+      status.textContent = '';
       results.removeAttribute('aria-busy');
       return;
     }
-    status.textContent = '검색 중입니다…';
+    status.textContent = '검색 중…';
     results.setAttribute('aria-busy', 'true');
     try {
       const data = await getIndex();
@@ -85,11 +82,11 @@ if (root) {
       });
       results.replaceChildren(...matches.map(renderResult));
       status.textContent = matches.length
-        ? `“${query}” 검색 결과 ${matches.length}개`
-        : `“${query}”에 대한 검색 결과가 없습니다. 다른 단어로 검색해 보세요.`;
+        ? `${matches.length}개`
+        : '검색 결과가 없습니다.';
     } catch {
       if (currentRevision !== revision) return;
-      status.textContent = '검색 자료를 불러오지 못했습니다. 연결을 확인하고 검색 버튼을 다시 눌러 주세요.';
+      status.textContent = '검색 실패. 다시 시도해 주세요.';
     } finally {
       if (currentRevision === revision) results.removeAttribute('aria-busy');
     }

@@ -1,7 +1,7 @@
 ---
-import { type Post, postUrl, tagUrl, formatDate } from '../lib/posts';
+import { type Post, postUrl, formatDate } from '../lib/posts';
 interface Props { posts: Post[]; emptyMessage?: string }
-const { posts, emptyMessage = '아직 공개된 글이 없습니다.' } = Astro.props;
+const { posts, emptyMessage = '글이 없습니다.' } = Astro.props;
 ---
 
 {posts.length ? (
@@ -14,12 +14,6 @@ const { posts, emptyMessage = '아직 공개된 글이 없습니다.' } = Astro.
             <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
             {post.data.draft && <strong class="draft-label"> · 초안</strong>}
           </p>
-          <p>{post.data.description}</p>
-          {post.data.tags.length > 0 && (
-            <ul class="tag-list" aria-label={`${post.data.title}의 태그`}>
-              {post.data.tags.map((tag) => <li><a href={tagUrl(tag)}>#{tag}</a></li>)}
-            </ul>
-          )}
         </article>
       </li>
     ))}

@@ -19,7 +19,6 @@ const { tag, posts } = Astro.props;
   <header class="page-heading">
     <p><a href={withBase('tags/')}>← 모든 태그</a></p>
     <h1>#{tag}</h1>
-    <p>{posts.length}개의 기록</p>
   </header>
   <PostList posts={posts} />
 </BaseLayout>
